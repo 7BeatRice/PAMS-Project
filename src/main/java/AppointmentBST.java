@@ -1,4 +1,5 @@
 
+import java.util.Comparator;
 public class AppointmentBST {
     private AppointmentNode root;
 
@@ -12,6 +13,22 @@ public class AppointmentBST {
 
     private AppointmentNode insertRec(AppointmentNode root, PatientAppointment appointment) {
         // TODO: Implement logic to insert by appointment time (avoid duplicates)
+
+            if (root == null){
+                return new AppointmentNode(appointment);
+            }
+        Comparator<PatientAppointment> comparator = (a, b) ->
+                a.getAppointmentTime().compareTo(b.getAppointmentTime());
+        if (comparator.compare(root.data, appointment) > 0) {
+                root.left = insertRec(root.left, appointment);
+            }
+            else if (comparator.compare(root.data, appointment) < 0){
+                root.right = insertRec(root.right, appointment);
+            }
+            else {
+                System.out.println("Duplicate not allowed: " + appointment);
+            }
+
         return root;
     }
 
